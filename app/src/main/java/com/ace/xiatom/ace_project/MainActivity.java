@@ -57,8 +57,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
+        //进入注册界面
         View headview=navigationView.inflateHeaderView(R.layout.side_bar_head);
         ImageView head_iv= headview.findViewById(R.id.photo);
         head_iv.setOnClickListener(photoClick);

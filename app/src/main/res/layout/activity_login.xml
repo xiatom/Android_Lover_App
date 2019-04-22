@@ -99,12 +99,8 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-<<<<<<< HEAD
                 <Button
                     android:id="@+id/button_login"
-=======
-                <TextView
->>>>>>> b8a77e47abcd19da0b2aee981f2deeb6526a48a7
                     android:background="#FF4040"
                     android:textSize="20dp"
                     android:text="登陆"
@@ -113,12 +109,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp" />
 
-<<<<<<< HEAD
                 <Button
                     android:id="@+id/button_signin"
-=======
-                <TextView
->>>>>>> b8a77e47abcd19da0b2aee981f2deeb6526a48a7
                     android:textSize="20dp"
                     android:background="#FFAEB9"
                     android:text="注册"

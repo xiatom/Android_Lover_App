@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.text.Layout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,19 +17,15 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.Inet4Address;
-import java.net.URL;
-
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener
-        {
+        implements NavigationView.OnNavigationItemSelectedListener {
+
+    private final int loginRequestCode = 1;
+    private String loginUser = null;
+    View headerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,15 +39,6 @@ public class MainActivity extends AppCompatActivity
         //侧边栏
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-
-
-
-
-//        NavigationView s = findViewById(R.id.nav_view);
-//        Button photo =  s.findViewById(R.id.btn);
-//        photo.setOnClickListener(photoClick);
-//        Log.i("msg",photo.toString());
-
         //toolbar上有点出抽屉图标
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -66,9 +50,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //进入注册界面
-        View headview=navigationView.inflateHeaderView(R.layout.side_bar_head);
-        ImageView head_iv= headview.findViewById(R.id.photo);
-        head_iv.setOnClickListener(photoClick);
+        headerView=navigationView.inflateHeaderView(R.layout.side_bar_head);
+        ImageView userPhoto = headerView.findViewById(R.id.photo);
+        userPhoto.setOnClickListener(login);
 
 
         //底部菜单选择
@@ -76,12 +60,29 @@ public class MainActivity extends AppCompatActivity
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    public View.OnClickListener photoClick = new View.OnClickListener() {
+    public View.OnClickListener login = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            startActivityForResult(new Intent(MainActivity.this,LoginActivity.class),loginRequestCode);
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case loginRequestCode:
+                if(resultCode==RESULT_OK){
+                    ImageView userPhoto = headerView.findViewById(R.id.photo);
+                    TextView userName = headerView.findViewById(R.id.username);
+                    Log.i("msg",userName.getText().toString());
+                    loginUser = data.getStringExtra("name");
+                    int photoRes = data.getIntExtra("photo",R.mipmap.ic_launcher_round);
+                    userPhoto.setImageResource(photoRes);
+                    userName.setText(loginUser);
+                    Log.i("msg",userName.getText().toString());
+                }
+        }
+    }
 
     //底部菜单监听器
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -162,32 +163,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    HttpURLConnection connection = null;
-                    DataOutputStream out;
-                    String string;
-                    try {
-                            URL url = new URL("http", "10.240.252.96", 8080, "/Android_User_Database/Login_submit");
-                            connection = (HttpURLConnection)url.openConnection();
-                            connection.setRequestMethod("POST");
-                            connection.setDoOutput(true);
-                            out = new DataOutputStream(connection.getOutputStream());
-                            out.writeBytes("name=ace&password=1023");
-                            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                            if((string=br.readLine())!=null) {
-                                System.out.println(string);
-                                Log.i("msg",string);
-                            }
-                            out.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }finally {
-                            connection.disconnect();
-                        }
-                }
-            }).start();
+
             Toast.makeText(this, "send", Toast.LENGTH_SHORT).show();
 
         }

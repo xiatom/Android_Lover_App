@@ -27,7 +27,9 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="登陆"></activity>
+        <activity android:name=".ChatActivity" android:label="聊天室"/>
+
     </application>
 
 </manifest>

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -30,6 +31,8 @@ import java.net.HttpURLConnection;
 import java.net.Inet4Address;
 import java.net.URL;
 
+=======
+>>>>>>> b8a77e47abcd19da0b2aee981f2deeb6526a48a7
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
         {
@@ -144,7 +147,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             Toast.makeText(this, "camera", Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
             startActivity(new Intent(MainActivity.this,ChatActivity.class));
+=======
+>>>>>>> b8a77e47abcd19da0b2aee981f2deeb6526a48a7
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             LinearLayout l = findViewById(R.id.contentLayout);
@@ -162,6 +168,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {
+<<<<<<< HEAD
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -188,6 +195,9 @@ public class MainActivity extends AppCompatActivity
                         }
                 }
             }).start();
+=======
+            Toast.makeText(this, "send", Toast.LENGTH_SHORT).show();
+>>>>>>> b8a77e47abcd19da0b2aee981f2deeb6526a48a7
 
         }
 

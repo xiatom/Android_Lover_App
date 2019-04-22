@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -30,6 +31,10 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.side_bar);
+
+
+
+
         LinearLayout l = findViewById(R.id.contentLayout);
         getLayoutInflater().inflate(R.layout.content_main,l);
         //设置顶部actionBar
@@ -58,6 +63,8 @@ public class MainActivity extends AppCompatActivity
         //底部菜单选择
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
     }
 
     public View.OnClickListener login = new View.OnClickListener() {
@@ -160,6 +167,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "tools", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_share) {
+            startActivity(new Intent(MainActivity.this,GPSActivity.class));
             Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_send) {

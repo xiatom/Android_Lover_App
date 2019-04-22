@@ -57,7 +57,9 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="XMSj1KuGhZMeG0FtFugcHG8sIbZW1DuN" />
-
+        <service android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"/>
         <activity android:name=".GPSActivity"></activity>
     </application>
 

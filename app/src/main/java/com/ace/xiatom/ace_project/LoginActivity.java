@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -33,20 +34,23 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+    private UserApplication userApplication;
+    TextView timeout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        userApplication = (UserApplication)this.getApplication();
         // Set up the login form.
         mEmailView = findViewById(R.id.email);
         mPasswordView = findViewById(R.id.password);
+        timeout= findViewById(R.id.showTimeOut);
         Button mEmailSignInButton = findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                timeout.setVisibility(View.INVISIBLE);
                 attemptLogin();
-
             }
         });
         mLoginFormView = findViewById(R.id.login_form);
@@ -126,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, Integer> {
         private final String mEmail;
         private final String mPassword;
         UserLoginTask(String email, String password) {
@@ -134,14 +138,16 @@ public class LoginActivity extends AppCompatActivity {
             mPassword = password;
         }
         @Override
-        protected Boolean doInBackground(Void... params) {
+        protected Integer doInBackground(Void... params) {
             HttpURLConnection connection = null;
             DataOutputStream out;
-            String string = null;
+            int flag = -1;//-1失败  1成功
+            String string = "false";
             try {
-                URL url = new URL("http", "10.240.252.96", 8080, "/Android_User_Database/Login_submit");
+                URL url = new URL("http", userApplication.getIp(), 8080, "/Android_User_Database/Login_submit");
                 connection = (HttpURLConnection)url.openConnection();
                 connection.setRequestMethod("POST");
+                connection.setConnectTimeout(5000);
                 connection.setDoOutput(true);
                 out = new DataOutputStream(connection.getOutputStream());
                 out.writeBytes("name="+mEmail+"&password="+mPassword);
@@ -151,32 +157,38 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 out.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                return 0;
             }finally {
                 connection.disconnect();
             }
 
             if(string.equals("success"))
-                return true;
+                return 1;
             else
-                return false;
+                return -1;
         }
+
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final Integer success) {
             mAuthTask = null;
             showProgress(false);
-            if (success) {
+            if (success==1) {
                 //先预设一个头像
                 int photo = R.drawable.default_photo;
                 //告诉主活动，用户登陆成功
+                userApplication.setName(mEmail);
+                userApplication.setPassword(mPassword);
                 Intent intent = new Intent();
                 intent.putExtra("name",mEmail);
                 intent.putExtra("photo",photo);
                 setResult(RESULT_OK,intent);
                 finish();
-            } else {
+            } else if(success==-1){
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
+            }else {
+                //超时
+                timeout.setVisibility(View.VISIBLE);
             }
         }
         @Override

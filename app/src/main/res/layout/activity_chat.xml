@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ace.xiatom.ace_project.ChatActivity">
+    tools:context="com.ace.xiatom.ace_project.ChatActivityOld">
 
     <TextView
         android:id="@+id/chat_content"

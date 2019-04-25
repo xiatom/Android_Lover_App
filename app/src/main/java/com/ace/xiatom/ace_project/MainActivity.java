@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,6 +22,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    UserApplication userApplication;
     private final int loginRequestCode = 1;
     private String loginUser = null;
     View headerView;
@@ -32,9 +31,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.side_bar);
 
-
-
-
+        userApplication = (UserApplication)this.getApplication();
+        userApplication.setIp("10.236.221.206");
         LinearLayout l = findViewById(R.id.contentLayout);
         getLayoutInflater().inflate(R.layout.content_main,l);
         //设置顶部actionBar
@@ -63,8 +61,6 @@ public class MainActivity extends AppCompatActivity
         //底部菜单选择
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
     }
 
     public View.OnClickListener login = new View.OnClickListener() {
@@ -81,8 +77,7 @@ public class MainActivity extends AppCompatActivity
                 if(resultCode==RESULT_OK){
                     ImageView userPhoto = headerView.findViewById(R.id.photo);
                     TextView userName = headerView.findViewById(R.id.username);
-                    Log.i("msg",userName.getText().toString());
-                    loginUser = data.getStringExtra("name");
+                    loginUser = userApplication.getName();
                     int photoRes = data.getIntExtra("photo",R.mipmap.ic_launcher_round);
                     userPhoto.setImageResource(photoRes);
                     userName.setText(loginUser);
@@ -99,7 +94,12 @@ public class MainActivity extends AppCompatActivity
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.bottom_chat:
+                    Intent chatIntent = new Intent(MainActivity.this,ChatActivity.class);
+                    chatIntent.putExtra("name","ace");
+                    chatIntent.putExtra("password","1023");
+                    chatIntent.putExtra("sendto","ace");
+                    startActivity(chatIntent);
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             Toast.makeText(this, "camera", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MainActivity.this,ChatActivity.class));
+            startActivity(new Intent(MainActivity.this,ChatActivityOld.class));
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             LinearLayout l = findViewById(R.id.contentLayout);

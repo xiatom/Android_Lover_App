@@ -62,7 +62,7 @@ public abstract class SideBar_BottomMenu extends AppCompatActivity
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.bottom_chat:
                     return true;
                 case R.id.navigation_notifications:
                     return true;

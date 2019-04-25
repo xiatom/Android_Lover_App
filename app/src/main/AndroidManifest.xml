@@ -31,6 +31,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name=".UserApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -51,16 +52,26 @@
             android:name=".LoginActivity"
             android:label="登陆" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".ChatActivityOld"
             android:label="聊天室" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="XMSj1KuGhZMeG0FtFugcHG8sIbZW1DuN" />
-        <service android:name="com.baidu.location.f"
+
+        <service
+            android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"/>
-        <activity android:name=".GPSActivity"></activity>
+            android:process=":remote" />
+
+        <activity android:name=".GPSActivity" />
+        <activity android:name=".ChatActivity"
+            android:launchMode="singleInstance"/>
+
+        <service
+            android:name=".ChatService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

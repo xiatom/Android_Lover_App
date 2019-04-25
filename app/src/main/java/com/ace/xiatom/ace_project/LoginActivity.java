@@ -182,6 +182,7 @@ public class LoginActivity extends AppCompatActivity {
                 intent.putExtra("name",mEmail);
                 intent.putExtra("photo",photo);
                 setResult(RESULT_OK,intent);
+                new Login_init().Connect(userApplication);
                 finish();
             } else if(success==-1){
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

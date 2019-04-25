@@ -95,9 +95,14 @@ public class MainActivity extends AppCompatActivity
                 case R.id.navigation_home:
                     return true;
                 case R.id.bottom_chat:
+                    //未登录
+                    if(userApplication.getConnection()==null){
+                        Toast.makeText(MainActivity.this,"您尚未登陆",Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
                     Intent chatIntent = new Intent(MainActivity.this,ChatActivity.class);
-                    chatIntent.putExtra("name","ace");
-                    chatIntent.putExtra("password","1023");
+                    chatIntent.putExtra("name",userApplication.getName());
+                    chatIntent.putExtra("password",userApplication.getPassword());
                     chatIntent.putExtra("sendto","ace");
                     startActivity(chatIntent);
                     return true;

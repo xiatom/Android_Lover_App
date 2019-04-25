@@ -76,18 +76,21 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_ui);
         userApplication = (UserApplication)this.getApplication();
-
+        xmpptcpConnection = userApplication.getConnection();
+        //设置音效
         soundPool.load(this,R.raw.fu,1);
         final int music = soundPool.load(this,R.raw.fu,1);
 
-        ActionBar actionBar = getSupportActionBar();
+        //跳转时获取的intent
         Intent intent = getIntent();
-        username = intent.getStringExtra("name");
-        password = intent.getStringExtra("password");
         sendto = intent.getStringExtra("sendto");
+
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(sendto);
+        //绑定服务
         Intent bindIntent = new Intent(this,ChatService.class);
         bindService(bindIntent,connection,BIND_AUTO_CREATE);
+
         dbHelper = new mySQLite(this,"homework.db",null,1);
         db = dbHelper.getWritableDatabase();
         messageBox = new MessageBoxManager(db);
@@ -108,7 +111,20 @@ public class ChatActivity extends AppCompatActivity {
             }
         };
 
-
+        //接受消息
+        ChatManager chatManager = ChatManager.getInstanceFor(xmpptcpConnection);
+        chatManager.addIncomingListener(new IncomingChatMessageListener() {
+            @Override
+            public void newIncomingMessage(EntityBareJid from, Message message, Chat chat) {
+                android.os.Message msg = new android.os.Message();
+                msg.what = UPDATE_TEXT;
+                msg.obj = message.getBody();
+                handler.sendMessage(msg);
+                soundPool.play(music,1,1,0,0,1);
+                System.out.println("新消息，来自" + from + ":" + message.getBody());
+                chatbinder.startShinning();
+            }
+        });
         //申请权限
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -139,48 +155,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                XMPPTCPConnectionConfiguration.Builder builder = XMPPTCPConnectionConfiguration.builder();
-                try {
-                    builder.setXmppDomain("localhost");
-                    builder.setHostAddress(InetAddress.getByName(userApplication.getIp()));
-                    builder.setPort(5222);
-                    builder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
-                    builder.setCompressionEnabled(true);
-                    builder.setSendPresence(true);
-                    xmpptcpConnection = new XMPPTCPConnection(builder.build());
-                    if (!xmpptcpConnection.isConnected()) {
-                        Log.i("msg", "connect");
-                        xmpptcpConnection.connect();
-                    } else {
-                        Log.i("msg", "already connect");
-                    }
-                    Presence presence = new Presence(Presence.Type.available);
-                    presence.setStatus("在线");
-                    //设置在线
-                    xmpptcpConnection.sendStanza(presence);
-                    xmpptcpConnection.login(username, password);
-                    //接受消息
-                    ChatManager chatManager = ChatManager.getInstanceFor(xmpptcpConnection);
-                    chatManager.addIncomingListener(new IncomingChatMessageListener() {
-                        @Override
-                        public void newIncomingMessage(EntityBareJid from, Message message, Chat chat) {
-                            android.os.Message msg = new android.os.Message();
-                            msg.what = UPDATE_TEXT;
-                            msg.obj = message.getBody();
-                            handler.sendMessage(msg);
-                            soundPool.play(music,1,1,0,0,1);
-                            System.out.println("新消息，来自" + from + ":" + message.getBody());
-                            chatbinder.startShinning();
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
     @Override
     protected void onResume() {

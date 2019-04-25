@@ -25,7 +25,10 @@ public class ChatService extends Service {
     class NotifyBinder extends Binder{
         public void startShinning(){
             if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-                builder.setContentText("您有新的消息").setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_newmsg));
+
+                Intent intent = new Intent(ChatService.this, ChatActivity.class);
+                PendingIntent pi = PendingIntent.getActivity(ChatService.this,0,intent,0);
+                builder.setContentIntent(pi).setContentText("您有新的消息").setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_newmsg));
                 Notification notification = builder.build();
                 startForeground(1,notification);
             }
@@ -44,7 +47,7 @@ public class ChatService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d("Service","onCreated execute");
-        Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pi = PendingIntent.getActivity(this,0,intent,0);
         if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O) {
             CharSequence name = "C1";

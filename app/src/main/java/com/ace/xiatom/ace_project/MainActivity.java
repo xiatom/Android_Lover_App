@@ -1,9 +1,16 @@
 package com.ace.xiatom.ace_project;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -32,7 +39,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.side_bar);
 
         userApplication = (UserApplication)this.getApplication();
-        userApplication.setIp("10.236.221.206");
+        String serviceString = Context.LOCATION_SERVICE;// 获取的是位置服务
+        userApplication.setLocationManager((LocationManager)getSystemService(serviceString));
+        userApplication.setContext(this);
+        userApplication.setIp("10.240.252.96");
         LinearLayout l = findViewById(R.id.contentLayout);
         getLayoutInflater().inflate(R.layout.content_main,l);
         //设置顶部actionBar

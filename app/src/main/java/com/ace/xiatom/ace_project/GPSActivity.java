@@ -17,12 +17,15 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 
 public class GPSActivity extends Activity {
@@ -30,6 +33,7 @@ public class GPSActivity extends Activity {
     LocationClient mLocationClient;
     private MapView mMapView = null;
     ImageButton locatSelf;
+    ImageButton locatHer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +72,23 @@ public class GPSActivity extends Activity {
                 //描述地图状态将要发生的变化,通过当前经纬度来使地图显示到该位置
                 MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(latLng);
                 //改变地图状态
+                mBaiduMap.setMapStatus(msu);
+            }
+        });
+
+        locatHer = findViewById(R.id.findHer);
+        locatSelf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LatLng herlocation = new LatLng(39.963175, 116.400244);
+
+                MapStatusUpdate msu = MapStatusUpdateFactory.newLatLng(herlocation);
+                //改变地图状态
+                BitmapDescriptor hericon = BitmapDescriptorFactory.fromResource(R.drawable.map_marker);
+                OverlayOptions heroption = new MarkerOptions()
+                        .position(herlocation)
+                        .icon(hericon);
+                mBaiduMap.addOverlay(heroption);
                 mBaiduMap.setMapStatus(msu);
             }
         });

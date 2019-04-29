@@ -2,7 +2,9 @@ package com.ace.xiatom.ace_project;
 
 import android.app.Application;
 import android.app.Notification;
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.location.LocationManager;
 
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
@@ -17,6 +19,23 @@ public class UserApplication extends Application {
     private Notification notification;
     private Bitmap photo;
     private String ip;
+    private Context context;
+    private LocationManager locationManager;
+    public LocationManager getLocationManager() {
+        return locationManager;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public void setLocationManager(LocationManager locationManager) {
+        this.locationManager = locationManager;
+    }
 
     public String getIp() {
         return ip;

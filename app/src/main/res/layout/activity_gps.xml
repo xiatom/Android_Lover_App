@@ -14,8 +14,21 @@
 
     <ImageButton
         android:id="@+id/findSelf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|center"
-        android:background="@drawable/map_self" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerInside"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="center|right"
+        android:background="@drawable/ic_my_location" />
+
+
+    <ImageButton
+        android:id="@+id/findHer"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="80dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="center|right"
+        android:background="@drawable/ic_map_her" />
 </FrameLayout>

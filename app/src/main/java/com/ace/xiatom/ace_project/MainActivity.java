@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         userApplication.setLocationManager((LocationManager)getSystemService(serviceString));
         userApplication.setContext(this);
         userApplication.setIp("10.240.252.96");
+        userApplication.setHer("ace");
         LinearLayout l = findViewById(R.id.contentLayout);
         getLayoutInflater().inflate(R.layout.content_main,l);
         //设置顶部actionBar
@@ -110,10 +111,11 @@ public class MainActivity extends AppCompatActivity
                         Toast.makeText(MainActivity.this,"您尚未登陆",Toast.LENGTH_SHORT).show();
                         return false;
                     }
+                    Log.i("chat:","h12");
                     Intent chatIntent = new Intent(MainActivity.this,ChatActivity.class);
                     chatIntent.putExtra("name",userApplication.getName());
                     chatIntent.putExtra("password",userApplication.getPassword());
-                    chatIntent.putExtra("sendto","ace");
+                    chatIntent.putExtra("sendto",userApplication.getHer());
                     startActivity(chatIntent);
                     return true;
                 case R.id.navigation_notifications:
@@ -142,19 +144,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
-
-//            startActivity(new Intent(this, class));
+            startActivity(new Intent(this,SettingActivity.class));
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

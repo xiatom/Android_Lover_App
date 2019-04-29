@@ -80,7 +80,7 @@ public class Login_init {
                         Log.i("msg", "not");
                     Location location;
                     while ((location = locationManager.getLastKnownLocation(provider)) == null) {
-                        Log.i("msg", "null");
+                        Log.i("msg", "location null");
                         Thread.sleep(2000);
                     }
                     double lat = location.getLatitude();

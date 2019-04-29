@@ -64,6 +64,7 @@
             android:enabled="true"
             android:process=":remote" />
 
+        <activity android:name=".SettingActivity" />
         <activity android:name=".GPSActivity" />
         <activity android:name=".ChatActivity"
             android:launchMode="singleInstance"/>

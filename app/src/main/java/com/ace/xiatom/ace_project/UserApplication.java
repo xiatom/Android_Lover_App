@@ -21,6 +21,16 @@ public class UserApplication extends Application {
     private String ip;
     private Context context;
     private LocationManager locationManager;
+
+    public String getHer() {
+        return her;
+    }
+
+    public void setHer(String her) {
+        this.her = her;
+    }
+
+    private String her;
     public LocationManager getLocationManager() {
         return locationManager;
     }

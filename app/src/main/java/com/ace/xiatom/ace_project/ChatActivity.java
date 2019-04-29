@@ -75,6 +75,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_ui);
+
         userApplication = (UserApplication)this.getApplication();
         xmpptcpConnection = userApplication.getConnection();
         //设置音效
@@ -86,6 +87,7 @@ public class ChatActivity extends AppCompatActivity {
         sendto = intent.getStringExtra("sendto");
 
         ActionBar actionBar = getSupportActionBar();
+        Log.i("chat:",sendto);
         actionBar.setTitle(sendto);
         //绑定服务
         Intent bindIntent = new Intent(this,ChatService.class);
@@ -132,12 +134,13 @@ public class ChatActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
         }
 
-        Button sendMsgButton = findViewById(R.id.send);
+        final Button sendMsgButton = findViewById(R.id.send);
         sendMsgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     ChatManager chatManager = ChatManager.getInstanceFor(xmpptcpConnection);
+                    Log.i("sendto",sendto);
                     EntityBareJid jid = JidCreate.entityBareFrom(sendto+"@localhost");
                     Chat chat = chatManager.chatWith(jid);
                     EditText msg = findViewById(R.id.sendMsg);

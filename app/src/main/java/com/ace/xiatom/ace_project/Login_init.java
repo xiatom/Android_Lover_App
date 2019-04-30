@@ -36,7 +36,7 @@ public class Login_init {
     public void Connect(UserApplication application) {
 
         this.userApplication = application;
-        new Thread(new Runnable() {
+        Thread connectThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 XMPPTCPConnectionConfiguration.Builder builder = XMPPTCPConnectionConfiguration.builder();
@@ -64,10 +64,16 @@ public class Login_init {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        connectThread.start();
 
+//        try{
+//            connectThread.join();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
 
-        new Thread(new Runnable() {
+        Thread changeThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -91,7 +97,10 @@ public class Login_init {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
+        changeThread.start();
+
+
         userApplication.getLocationManager().requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 200, locationListener);
 
     }
@@ -109,7 +118,7 @@ public class Login_init {
                     connection.setConnectTimeout(5000);
                     connection.setDoOutput(true);
                     DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-                    out.writeBytes("latitude=" + lat + "&longitude=" + lon);
+                    out.writeBytes("latitude=" + lat + "&longitude=" + lon+"&askLoc=null");
                     BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String string;
                     if ((string = br.readLine()) != null) {

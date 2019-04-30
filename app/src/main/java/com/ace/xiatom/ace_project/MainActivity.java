@@ -113,9 +113,6 @@ public class MainActivity extends AppCompatActivity
                     }
                     Log.i("chat:","h12");
                     Intent chatIntent = new Intent(MainActivity.this,ChatActivity.class);
-                    chatIntent.putExtra("name",userApplication.getName());
-                    chatIntent.putExtra("password",userApplication.getPassword());
-                    chatIntent.putExtra("sendto",userApplication.getHer());
                     startActivity(chatIntent);
                     return true;
                 case R.id.navigation_notifications:
@@ -146,7 +143,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this,SettingActivity.class));
             return true;
         }
@@ -165,21 +161,21 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this,ChatActivityOld.class));
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            LinearLayout l = findViewById(R.id.contentLayout);
-            l.removeAllViews();
-            getLayoutInflater().inflate(R.layout.content_main,l);
+//            LinearLayout l = findViewById(R.id.contentLayout);
+//            l.removeAllViews();
+//            getLayoutInflater().inflate(R.layout.content_main,l);
+
+            startActivity(new Intent(MainActivity.this,PhotoActivity.class));
             Toast.makeText(this, "gallery", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_slideshow) {
             Toast.makeText(this, "sildeshow", Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            startActivity(new Intent(MainActivity.this,CalendarActivity.class));
 
         } else if (id == R.id.nav_manage) {
             Toast.makeText(this, "tools", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_share) {
             startActivity(new Intent(MainActivity.this,GPSActivity.class));
-            Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
-
         } else if (id == R.id.nav_send) {
 
             Toast.makeText(this, "send", Toast.LENGTH_SHORT).show();

@@ -69,6 +69,10 @@
         <activity android:name=".ChatActivity"
             android:launchMode="singleInstance"/>
 
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".PhotoActivity" />
+        <activity android:name=".ChoosephotoActivity"></activity>
+
         <service
             android:name=".ChatService"
             android:enabled="true"

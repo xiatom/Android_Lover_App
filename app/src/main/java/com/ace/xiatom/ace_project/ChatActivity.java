@@ -21,18 +21,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import org.jivesoftware.smack.AbstractXMPPConnection;
-import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.chat2.Chat;
 import org.jivesoftware.smack.chat2.ChatManager;
 import org.jivesoftware.smack.chat2.IncomingChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
-import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.jxmpp.jid.EntityBareJid;
 import org.jxmpp.jid.impl.JidCreate;
 
-import java.net.InetAddress;
 import java.util.List;
 
 
@@ -64,10 +59,8 @@ public class ChatActivity extends AppCompatActivity {
     private final int UPDATE_TEXT = 1;
     AbstractXMPPConnection xmpptcpConnection;
     private SQLiteDatabase db;
-    private mySQLite dbHelper;
+    private msgSQLite dbHelper;
     MessageBoxManager messageBox;
-    String username ;
-    String password;
     String sendto;
     SoundPool soundPool = new SoundPool(3, AudioManager.STREAM_SYSTEM, 0);
     UserApplication userApplication ;
@@ -81,10 +74,7 @@ public class ChatActivity extends AppCompatActivity {
         //设置音效
         soundPool.load(this,R.raw.fu,1);
         final int music = soundPool.load(this,R.raw.fu,1);
-
-        //跳转时获取的intent
-        Intent intent = getIntent();
-        sendto = intent.getStringExtra("sendto");
+        sendto= userApplication.getHer();
 
         ActionBar actionBar = getSupportActionBar();
         Log.i("chat:",sendto);
@@ -93,7 +83,7 @@ public class ChatActivity extends AppCompatActivity {
         Intent bindIntent = new Intent(this,ChatService.class);
         bindService(bindIntent,connection,BIND_AUTO_CREATE);
 
-        dbHelper = new mySQLite(this,"homework.db",null,1);
+        dbHelper = new msgSQLite(this,"homework.db",null,1);
         db = dbHelper.getWritableDatabase();
         messageBox = new MessageBoxManager(db);
         chat_list = findViewById(R.id.chatList);

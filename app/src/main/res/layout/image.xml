@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ace.xiatom.ace_project.SquareLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text=""
+        android:visibility="invisible"
+        android:id="@+id/tv1"/>
+</com.ace.xiatom.ace_project.SquareLayout>

@@ -67,11 +67,6 @@ public class Login_init {
         });
         connectThread.start();
 
-//        try{
-//            connectThread.join();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
 
         Thread changeThread = new Thread(new Runnable() {
             @Override

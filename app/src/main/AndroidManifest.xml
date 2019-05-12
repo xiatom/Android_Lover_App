@@ -69,7 +69,8 @@
         <activity android:name=".ChatActivity"
             android:launchMode="singleInstance"/>
 
-        <activity android:name=".CalendarActivity" />
+        <activity android:name=".CalendarActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".PhotoActivity" />
         <activity android:name=".ChoosephotoActivity"></activity>
 

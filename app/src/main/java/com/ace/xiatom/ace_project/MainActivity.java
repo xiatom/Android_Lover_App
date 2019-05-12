@@ -115,8 +115,6 @@ public class MainActivity extends AppCompatActivity
                     Intent chatIntent = new Intent(MainActivity.this,ChatActivity.class);
                     startActivity(chatIntent);
                     return true;
-                case R.id.navigation_notifications:
-                    return true;
             }
             return false;
         }
@@ -134,7 +132,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.head_menu, menu);
         return true;
     }
@@ -156,11 +153,7 @@ public class MainActivity extends AppCompatActivity
         // Handle bottom_bar_items view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            Toast.makeText(this, "camera", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(MainActivity.this,ChatActivityOld.class));
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_gallery) {
 //            LinearLayout l = findViewById(R.id.contentLayout);
 //            l.removeAllViews();
 //            getLayoutInflater().inflate(R.layout.content_main,l);
@@ -171,15 +164,8 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "sildeshow", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(MainActivity.this,CalendarActivity.class));
 
-        } else if (id == R.id.nav_manage) {
-            Toast.makeText(this, "tools", Toast.LENGTH_SHORT).show();
-
-        } else if (id == R.id.nav_share) {
+        }  else if (id == R.id.nav_share) {
             startActivity(new Intent(MainActivity.this,GPSActivity.class));
-        } else if (id == R.id.nav_send) {
-
-            Toast.makeText(this, "send", Toast.LENGTH_SHORT).show();
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

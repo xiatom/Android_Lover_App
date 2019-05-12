@@ -64,8 +64,6 @@ public abstract class SideBar_BottomMenu extends AppCompatActivity
                     return true;
                 case R.id.bottom_chat:
                     return true;
-                case R.id.navigation_notifications:
-                    return true;
             }
             return false;
         }
@@ -112,23 +110,14 @@ public abstract class SideBar_BottomMenu extends AppCompatActivity
         // Handle bottom_bar_items view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            Toast.makeText(this, "camera", Toast.LENGTH_SHORT).show();
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_gallery) {
             Toast.makeText(this, "gallery", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_slideshow) {
             Toast.makeText(this, "sildeshow", Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.nav_manage) {
-            Toast.makeText(this, "tools", Toast.LENGTH_SHORT).show();
-
         } else if (id == R.id.nav_share) {
             Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
-
-        } else if (id == R.id.nav_send) {
-            Toast.makeText(this, "send", Toast.LENGTH_SHORT).show();
 
         }
 
